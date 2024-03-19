@@ -8,7 +8,9 @@ on:
 jobs:
     unit-test:
         container: cuaesd/aesd-autotest:unit-test
-        runs-on: self-hosted
+        runs-on: 
+            - self-hosted
+            - label-1
         steps:
           - uses: actions/checkout@v2
           - name: Checkout submodules
