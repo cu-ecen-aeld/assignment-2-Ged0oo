@@ -2,24 +2,27 @@
 
 writefile=$1
 writestr=$2
-direname=$(dirname "$writefile")
 
-if [ -z "$writefile" ] || [ -z "$writestr" ] || [ $# -eq 0 ] ; then
-    echo "Error: Missing arguments"
+if [ $# -ne 2 ];
+then
+    #Check if we have enough 2 arguments as input
+    echo "ERROR: Invalid Number of Arguments."
+    echo "Total number of arguments should be 2."
     exit 1
 fi
 
-if [[ ! -e "$writefile" ]]; then
-    mkdir -m 775 -v -p "$direname"
-    touch "$writefile" && chmod 775 "$writefile"
+if [ ! -d ${writefile%/*} ];
+then
+    #If file does not exist, created this file
+    mkdir -p "${writefile%/*}"
 fi
 
-if [ -e "$writefile" ]; then
-    echo -e "$writestr" > "$writefile"
-    echo "File created and its content:"
-    cat "$writefile"
-    exit 0
-else
-    echo "File won't be created"
+if ! echo $writestr > $writefile;
+then
+    #Write to file if file exist
+    echo "ERROR: file cannot be created"
     exit 1
+
 fi
+
+
